@@ -30,6 +30,7 @@ ChatBot::ChatBot(std::string filename)
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 
+// Destructor
 ChatBot::~ChatBot()
 {
     std::cout << "ChatBot Destructor" << std::endl;
@@ -44,7 +45,69 @@ ChatBot::~ChatBot()
 
 //// STUDENT CODE
 ////
+// Copy Constructor
+ChatBot::ChatBot(const ChatBot &other)
+{
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+    _image = new wxBitmap(*other._image);
+    _chatLogic = other._chatLogic;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+}
 
+// Copy Assignment Operator
+ChatBot &ChatBot::operator=(const ChatBot &other)
+{
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
+    if (this == &other)
+        return *this;
+
+    delete _image;
+
+    _image = new wxBitmap(*other._image);
+    _chatLogic = other._chatLogic;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+
+    return *this;
+}
+
+// Move Constructor
+ChatBot::ChatBot(ChatBot &&other) noexcept
+{
+    std::cout << "ChatBot Move Constructor" << std::endl;
+    _image = other._image;
+    _chatLogic = other._chatLogic;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+
+    other._image = nullptr;
+    other._chatLogic = nullptr;
+    other._currentNode = nullptr;
+    other._rootNode = nullptr;
+}
+
+// Move Assignment Operator
+ChatBot &ChatBot::operator=(ChatBot &&other) noexcept
+{
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
+    if (this == &other)
+        return *this;
+
+    delete _image;
+
+    _image = other._image;
+    _chatLogic = other._chatLogic;
+    _currentNode = other._currentNode;
+    _rootNode = other._rootNode;
+
+    other._image = nullptr;
+    other._chatLogic = nullptr;
+    other._currentNode = nullptr;
+    other._rootNode = nullptr;
+
+    return *this;
+}
 ////
 //// EOF STUDENT CODE
 
