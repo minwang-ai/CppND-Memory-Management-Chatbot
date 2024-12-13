@@ -205,12 +205,13 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
     // Set the ChatLogic handle to this ChatLogic instance
     chatBot.SetChatLogicHandle(this);
 
-    // Update the _chatBot pointer to point to the ChatBot instance
-    _chatBot = &chatBot;
-
-    // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
+    // move chatbot to graph root node
     rootNode->MoveChatbotHere(std::move(chatBot));
+    // set chatbot's root node member variable
+    _chatBot->SetRootNode(rootNode);
+
+    // Update ChatLogic's _chatBot pointer
+    _chatBot = rootNode->GetChatBotHandle();
     
     ////
     //// EOF STUDENT CODE

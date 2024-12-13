@@ -42,6 +42,7 @@ public:
     GraphEdge *GetChildEdgeAtIndex(int index);
     std::vector<std::string> GetAnswers() { return _answers; }
     int GetNumberOfParents() { return _parentEdges.size(); }
+    ChatBot* GetChatBotHandle() { return &_chatBot; }
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list

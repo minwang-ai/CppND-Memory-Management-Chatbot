@@ -49,10 +49,25 @@ ChatBot::~ChatBot()
 ChatBot::ChatBot(const ChatBot &other)
 {
     std::cout << "ChatBot Copy Constructor" << std::endl;
-    _image = new wxBitmap(*other._image);
+    // deep copy for owned resource
+    if (other._image != nullptr)
+    {
+        _image = new wxBitmap(*other._image);
+    }
+    else
+    {
+        _image = nullptr;
+    }
+    // shallow copy for non-owning pointers
     _chatLogic = other._chatLogic;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
+
+    // Update ChatLogic's handle to point to the new ChatBot instance
+    if (_chatLogic != nullptr)
+    {
+        _chatLogic->SetChatbotHandle(this);
+    }
 }
 
 // Copy Assignment Operator
@@ -62,12 +77,29 @@ ChatBot &ChatBot::operator=(const ChatBot &other)
     if (this == &other)
         return *this;
 
+    // Deallocate existing resource
     delete _image;
 
-    _image = new wxBitmap(*other._image);
+    // deep copy for owned resource
+    // check if other._image is not nullptr before dereferencing it.
+    if (other._image != nullptr)
+    {
+        _image = new wxBitmap(*other._image);
+    }
+    else
+    {
+        _image = nullptr;
+    }
+    // shallow copy for non-owning pointers
     _chatLogic = other._chatLogic;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
+
+    // Update ChatLogic's handle to point to the new ChatBot instance
+    if (_chatLogic != nullptr)
+    {
+        _chatLogic->SetChatbotHandle(this);
+    }
 
     return *this;
 }
@@ -76,15 +108,18 @@ ChatBot &ChatBot::operator=(const ChatBot &other)
 ChatBot::ChatBot(ChatBot &&other) noexcept
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
+    // Transfer handle    
     _image = other._image;
     _chatLogic = other._chatLogic;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
-
+    // Invalidate owning data hanlde of the source 
     other._image = nullptr;
-    other._chatLogic = nullptr;
-    other._currentNode = nullptr;
-    other._rootNode = nullptr;
+    // Update ChatLogic's handle to point to the new ChatBot instance
+    if (_chatLogic != nullptr)
+    {
+        _chatLogic->SetChatbotHandle(this);
+    }
 }
 
 // Move Assignment Operator
@@ -94,17 +129,21 @@ ChatBot &ChatBot::operator=(ChatBot &&other) noexcept
     if (this == &other)
         return *this;
 
+    // Clean up existing resources
     delete _image;
 
+    // Transfer handle 
     _image = other._image;
     _chatLogic = other._chatLogic;
     _currentNode = other._currentNode;
     _rootNode = other._rootNode;
-
+    // Invalidate owning data hanlde of the source
     other._image = nullptr;
-    other._chatLogic = nullptr;
-    other._currentNode = nullptr;
-    other._rootNode = nullptr;
+    // Update ChatLogic's handle to point to the new ChatBot instance
+    if (_chatLogic != nullptr)
+    {
+        _chatLogic->SetChatbotHandle(this);
+    }
 
     return *this;
 }
