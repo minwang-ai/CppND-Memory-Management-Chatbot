@@ -46,22 +46,22 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 // Copy Constructor
-ChatBot::ChatBot(const ChatBot &other)
+ChatBot::ChatBot(const ChatBot &source)
 {
     std::cout << "ChatBot Copy Constructor" << std::endl;
     // deep copy for owned resource
-    if (other._image != nullptr)
+    if (source._image != nullptr)
     {
-        _image = new wxBitmap(*other._image);
+        _image = new wxBitmap(*source._image);
     }
     else
     {
         _image = nullptr;
     }
     // shallow copy for non-owning pointers
-    _chatLogic = other._chatLogic;
-    _currentNode = other._currentNode;
-    _rootNode = other._rootNode;
+    _chatLogic = source._chatLogic;
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
 
     // Update ChatLogic's handle to point to the new ChatBot instance
     if (_chatLogic != nullptr)
@@ -71,29 +71,11 @@ ChatBot::ChatBot(const ChatBot &other)
 }
 
 // Copy Assignment Operator
-ChatBot &ChatBot::operator=(const ChatBot &other)
+ChatBot& ChatBot::operator=(const ChatBot &source)
 {
     std::cout << "ChatBot Copy Assignment Operator" << std::endl;
-    if (this == &other)
-        return *this;
-
-    // Deallocate existing resource
-    delete _image;
-
-    // deep copy for owned resource
-    // check if other._image is not nullptr before dereferencing it.
-    if (other._image != nullptr)
-    {
-        _image = new wxBitmap(*other._image);
-    }
-    else
-    {
-        _image = nullptr;
-    }
-    // shallow copy for non-owning pointers
-    _chatLogic = other._chatLogic;
-    _currentNode = other._currentNode;
-    _rootNode = other._rootNode;
+    ChatBot tmp(source);
+    swap(tmp);
 
     // Update ChatLogic's handle to point to the new ChatBot instance
     if (_chatLogic != nullptr)
@@ -123,22 +105,11 @@ ChatBot::ChatBot(ChatBot &&other) noexcept
 }
 
 // Move Assignment Operator
-ChatBot &ChatBot::operator=(ChatBot &&other) noexcept
+ChatBot& ChatBot::operator=(ChatBot &&source) noexcept
 {
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
-    if (this == &other)
-        return *this;
+    swap(source);
 
-    // Clean up existing resources
-    delete _image;
-
-    // Transfer handle 
-    _image = other._image;
-    _chatLogic = other._chatLogic;
-    _currentNode = other._currentNode;
-    _rootNode = other._rootNode;
-    // Invalidate owning data hanlde of the source
-    other._image = nullptr;
     // Update ChatLogic's handle to point to the new ChatBot instance
     if (_chatLogic != nullptr)
     {
@@ -147,6 +118,16 @@ ChatBot &ChatBot::operator=(ChatBot &&other) noexcept
 
     return *this;
 }
+
+// use swap function in the assignment operators
+void ChatBot::swap(ChatBot& rhs) noexcept
+{
+    std::swap(_image, rhs._image);
+    std::swap(_chatLogic, rhs._chatLogic);
+    std::swap(_currentNode, rhs._currentNode);
+    std::swap(_rootNode, rhs._rootNode);
+}
+
 ////
 //// EOF STUDENT CODE
 

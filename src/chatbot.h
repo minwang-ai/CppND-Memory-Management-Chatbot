@@ -34,6 +34,8 @@ public:
     ChatBot &operator=(const ChatBot &other); // Copy assignment operator
     ChatBot(ChatBot &&other) noexcept; // Move constructor
     ChatBot &operator=(ChatBot &&other) noexcept; // Move assignment operator
+    // Swap function
+    void swap(ChatBot& rhs) noexcept; 
     ////
     //// EOF STUDENT CODE
 
