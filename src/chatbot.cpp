@@ -87,16 +87,16 @@ ChatBot& ChatBot::operator=(const ChatBot &source)
 }
 
 // Move Constructor
-ChatBot::ChatBot(ChatBot &&other) noexcept
+ChatBot::ChatBot(ChatBot &&source) noexcept
 {
     std::cout << "ChatBot Move Constructor" << std::endl;
     // Transfer handle    
-    _image = other._image;
-    _chatLogic = other._chatLogic;
-    _currentNode = other._currentNode;
-    _rootNode = other._rootNode;
+    _image = source._image;
+    _chatLogic = source._chatLogic;
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
     // Invalidate owning data hanlde of the source 
-    other._image = nullptr;
+    source._image = nullptr;
     // Update ChatLogic's handle to point to the new ChatBot instance
     if (_chatLogic != nullptr)
     {

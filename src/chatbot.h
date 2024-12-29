@@ -30,10 +30,10 @@ public:
     //// STUDENT CODE
     ////
     // Rule of Five
-    ChatBot(const ChatBot &other); // Copy constructor
-    ChatBot &operator=(const ChatBot &other); // Copy assignment operator
-    ChatBot(ChatBot &&other) noexcept; // Move constructor
-    ChatBot &operator=(ChatBot &&other) noexcept; // Move assignment operator
+    ChatBot(const ChatBot &source); // Copy constructor
+    ChatBot &operator=(const ChatBot &source); // Copy assignment operator
+    ChatBot(ChatBot &&source) noexcept; // Move constructor
+    ChatBot &operator=(ChatBot &&source) noexcept; // Move assignment operator
     // Swap function
     void swap(ChatBot& rhs) noexcept; 
     ////
