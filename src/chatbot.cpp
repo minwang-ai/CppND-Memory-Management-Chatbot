@@ -108,6 +108,8 @@ ChatBot::ChatBot(ChatBot &&source) noexcept
 ChatBot& ChatBot::operator=(ChatBot &&source) noexcept
 {
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
+    // Create a temporary ChatBot by moving from source 
+    ChatBot temp(std::move(source)); // calls move constructor
     swap(source);
 
     // Update ChatLogic's handle to point to the new ChatBot instance
