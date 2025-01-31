@@ -43,7 +43,6 @@ void GraphNode::MoveChatbotHere(ChatBot chatBot)
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 {
     newNode->MoveChatbotHere(std::move(_chatBot));
-    _chatBot = ChatBot(); // Reset the ChatBot in the current node
 }
 ////
 //// EOF STUDENT CODE
