@@ -209,8 +209,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
     // move chatbot to graph root node
     rootNode->MoveChatbotHere(std::move(chatBot));
-    // Update ChatLogic's _chatBot handle to point to the ChatBot instance in the root node
-    this->SetChatbotHandle(rootNode->GetChatBotHandle());
+    // Update ChatLogic's _chatBot handle to point to the ChatBot instance in the root node (redundent as it has been set in move operations in chatBot.cpp)
+    // this->SetChatbotHandle(rootNode->GetChatBotHandle()); 
 
     
     ////

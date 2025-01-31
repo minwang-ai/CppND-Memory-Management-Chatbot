@@ -110,7 +110,7 @@ ChatBot& ChatBot::operator=(ChatBot &&source) noexcept
     std::cout << "ChatBot Move Assignment Operator" << std::endl;
     // Create a temporary ChatBot by moving from source 
     ChatBot temp(std::move(source)); // calls move constructor
-    swap(source);
+    swap(temp);
 
     // Update ChatLogic's handle to point to the new ChatBot instance
     if (_chatLogic != nullptr)
@@ -177,7 +177,7 @@ void ChatBot::SetCurrentNode(GraphNode *node)
     std::mt19937 generator(int(std::time(0)));
     std::uniform_int_distribution<int> dis(0, answers.size() - 1);
     std::string answer = answers.at(dis(generator));
-
+  
     // send selected node answer to user
     _chatLogic->SendMessageToUser(answer);
 }
